@@ -19,4 +19,6 @@ public class CoffeeService {
     public void deleteCoffee (String coffee) {repository.deleteCoffee(coffee);}
 
     public void updateCoffee (Coffee coffee, String coffeeToUpdate) {repository.updateCoffee(coffee, coffeeToUpdate);}
+
+    public Coffee getCoffee (String name) {return repository.getCoffee(name);}
 }

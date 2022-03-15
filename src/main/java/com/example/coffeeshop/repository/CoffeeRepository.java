@@ -2,6 +2,8 @@ package com.example.coffeeshop.repository;
 
 import com.example.coffeeshop.data.Coffee;
 import com.example.coffeeshop.provider.SessionConnectionProvider;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -10,11 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CoffeeRepository /*extends AbstractRepository*/ {
+public class CoffeeRepository {
 
     private SessionConnectionProvider connection;
+    private final JdbcTemplate jdbcTemplate;
 
-    public CoffeeRepository() {
+    public CoffeeRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
         this.connection = SessionConnectionProvider.getInstance();
     }
 
@@ -28,17 +32,12 @@ public class CoffeeRepository /*extends AbstractRepository*/ {
         }
 
     public List<Coffee> getAllCoffee (){
-        List <Coffee> coffeeList = new ArrayList<>();
-        try {
-           ResultSet resultSet = connection.getSessionConnection().createStatement().executeQuery("SELECT * FROM Coffee;");
-           while (resultSet.next()){
-               Coffee coffee = new Coffee(resultSet.getString("Name"), resultSet.getDouble("Price"));
-               coffeeList.add(coffee);
-           }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return coffeeList;
+       return jdbcTemplate.query("SELECT * FROM Coffee;", (rs, rowNum) ->{
+        Coffee coffee = new Coffee();
+        coffee.setName(rs.getString("name"));
+        coffee.setPrice(rs.getDouble("price"));
+        return coffee;
+       });
     }
 
     public void deleteCoffee (String coffee){
@@ -58,4 +57,18 @@ public class CoffeeRepository /*extends AbstractRepository*/ {
             System.out.println(e);
         }
     }
+
+    public Coffee getCoffee(String name){
+        try {
+            ResultSet resultSet = connection.getSessionConnection().createStatement().executeQuery("SELECT * FROM Coffee WHERE Name=\'" + name + "\';");
+            while (resultSet.next()){
+                Coffee coffee = new Coffee(resultSet.getString("Name"), resultSet.getDouble("Price"));
+                return coffee;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }
