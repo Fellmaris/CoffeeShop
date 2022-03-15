@@ -14,31 +14,31 @@
         Product list is empty :|!
     </div>
 
-<div th:if="${!#lists.isEmpty(allCoffee)}">
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price EUR</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="coffee: ${allCoffee}">
-            <td>
-                <a th:href="@{/coffee/update(name=${coffee.name})}"  th:text="${coffee.name}"></a>
-            </td>
-            <td th:text="${coffee.price}"></td>
-            <td>
-                <a th:href="@{/coffee/delete(name=${coffee.name})}"
-                   class="btn btn-outline-danger">
-                    <i class="bi bi-trash"></i>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div th:if="${!#lists.isEmpty(allCoffee)}">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price EUR</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="coffee: ${allCoffee}">
+                    <td>
+                        <a th:href="@{/coffee/update(name=${coffee.name})}"  th:text="${coffee.name}"></a>
+                    </td>
+                    <td th:text="${coffee.price}"></td>
+                    <td>
+                        <a th:href="@{/coffee/delete/{name}(name=${coffee.name})}"
+                           class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

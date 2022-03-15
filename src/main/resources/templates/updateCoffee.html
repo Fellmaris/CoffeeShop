@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create coffee</title>
+</head>
+<body>
+<h2>Create New Coffee form:</h2>
+<form method="post" th:object="${coffee}" >
+    <div>
+        <label>Name:</label>
+        <input type="text" placeholder="Coffee Name" th:field="*{name}">
+    </div>
+    <div>
+        <label>Price:</label>
+        <input type="text" placeholder="Coffee Price" th:field="*{price}">
+    </div>
+    <button type="submit">Update Coffee</button>
+</form>
+<div th:if="${success}" th:text="${success}"></div>
+</body>
+</html>
