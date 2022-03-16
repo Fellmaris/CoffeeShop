@@ -9,6 +9,8 @@
 </head>
 <body>
 <div class="container">
+    <a th:href="@{/coffee/create}"
+       class="btn btn-primary">Create Coffee</a>
     <div th:if="${#lists.isEmpty(allCoffee)}"
          class="alert alert-primary" role="alert">
         Product list is empty :|!
