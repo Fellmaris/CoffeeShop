@@ -33,27 +33,25 @@ public class CoffeeController {
     @PostMapping("/create")
     public String createCoffee (Coffee coffee, Model model ){
         model.addAttribute("coffee", new Coffee());
-        model.addAttribute("success", "Coffee created successfully");
         service.createCoffee(coffee);
         return "redirect:/coffee";
     }
 
-    @DeleteMapping("/delete" + COFFEE_BY_NAME)
-    public String deleteCoffee (@PathVariable(NAME_VARIABLE) String coffee) {
+    @GetMapping("/delete" + COFFEE_BY_NAME)
+    public String deleteCoffee (@PathVariable (NAME_VARIABLE) String coffee) {
         service.deleteCoffee(coffee);
         return "redirect:/coffee";
     }
 
-    @GetMapping("/update")
-    public String loadUpdateForm (@RequestParam String name, Model model) {
+    @GetMapping("/update" + COFFEE_BY_NAME)
+    public String loadUpdateForm (@PathVariable (NAME_VARIABLE) String name, Model model) {
         model.addAttribute("coffee", service.getCoffee(name));
         return "updateCoffee";
     }
 
-    @PutMapping("/update" + COFFEE_BY_NAME)
-    public String updateCoffee (@PathVariable(NAME_VARIABLE) String name, Coffee coffee, Model model){
+    @PostMapping("/update" + COFFEE_BY_NAME)
+    public String updateCoffee (@PathVariable (NAME_VARIABLE) String name, Coffee coffee){
         service.updateCoffee(coffee, name);
-        model.addAttribute("success", "Update successful");
         return "redirect:/coffee";
     }
 }

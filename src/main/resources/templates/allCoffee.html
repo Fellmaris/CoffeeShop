@@ -26,7 +26,8 @@
             <tbody>
                 <tr th:each="coffee: ${allCoffee}">
                     <td>
-                        <a th:href="@{/coffee/update(name=${coffee.name})}"  th:text="${coffee.name}"></a>
+                        <a th:href="@{/coffee/update/{name}(name=${coffee.name})}"
+                           th:text="${coffee.name}"></a>
                     </td>
                     <td th:text="${coffee.price}"></td>
                     <td>
